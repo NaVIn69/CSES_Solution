@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+#define endl "\n"
+vector<int> calculateZ(string s) {
+    int n = s.length();
+    vector<int> Z(n);
+    int L = 0, R = 0;
+
+    for (int i = 1; i < n; i++) {
+        if (i > R) {
+            L = R = i;
+            while (R < n && s[R-L] == s[R]) R++;
+            Z[i] = R-L; R--;
+        } else {
+            int k = i-L;
+            if (Z[k] < R-i+1) Z[i] = Z[k];
+            else {
+                L = i;
+                while (R < n && s[R-L] == s[R]) R++;
+                Z[i] = R-L; R--;
+            }
+        }
+    }
+    return Z;
+}
+
+void solve(){
+    string text,pattern;
+    cin>>text>>pattern;
+    string str=pattern+'@'+text;
+    vector<int>ans=calculateZ(str);
+    int sz=pattern.size();
+    int cnt=0;
+    for(int i=0;i<ans.size();i++){
+             
+        if(ans[i]==sz){
+         cnt++;
+        }
+    } 
+    cout<<cnt<<endl;
+
+}
+signed main(){
+    solve();
+}
